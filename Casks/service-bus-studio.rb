@@ -1,8 +1,8 @@
 cask "service-bus-studio" do
-  version "0.1.1"
-  sha256 "f7f3b0a0fc50cb20bebebe83b0776207504078b5db47637da68f55ecdefd0c1e"
+  version "0.1.2"
+  sha256 "c0dd0f0a768a15554de462dda5f021bfb07d494a0048acf997bda231bb09bf1d"
 
-  url "https://github.com/Sandyprc/sbs/releases/download/v0.1.1/ServiceBusStudio-0.1.1.dmg"
+  url "https://github.com/Sandyprc/sbs/releases/download/v0.1.2/ServiceBusStudio-0.1.2.dmg"
   name "Service Bus Studio"
   desc "Explore and manage Azure Service Bus queues, topics and messages"
   homepage "https://github.com/Sandyprc/sbs"
@@ -12,6 +12,11 @@ cask "service-bus-studio" do
   depends_on macos: :sequoia
 
   app "Service Bus Studio.app"
+
+  # Not notarized yet: clear the download flag so the first launch opens without the Gatekeeper block.
+  postflight do
+    system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{appdir}/Service Bus Studio.app"]
+  end
 
   zap trash: [
     "~/Library/Application Scripts/com.sandyprc.servicebusstudio",
